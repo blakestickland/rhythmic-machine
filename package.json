@@ -21,8 +21,10 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "classnames": "^2.3.1",
     "express": "^4.16.3",
     "if-env": "^1.0.4",
-    "mongoose": "^5.8.11"
+    "mongoose": "^5.8.11",
+    "use-sound": "^3.0.1"
   }
 }
