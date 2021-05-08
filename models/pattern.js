@@ -18,7 +18,7 @@ const patternSchema = new mongoose.Schema({
   },
   trackList: {
     type: Array,
-    default: [{}],
+    default: [],
     required: true
   }
 });
