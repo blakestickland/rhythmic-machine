@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "../Grid";
+import "./styles.css";
 
 // Exporting both PatternList and PatternListItem from this file
 
@@ -10,27 +11,26 @@ export function PatternList({ children }) {
 
 // PatternListItem renders a bootstrap list item containing data from the recipe api call
 export function PatternListItem(props) {
-  console.log(`Props are: ${props.patternName}`);
-  const {patternName, numberOfSteps, pattern, description} = props;
+  console.log(`Props are for the pattern: ${props.title}`);
+  const {id, title, noteCount, trackList} = props;
 // }
   return (
     <li className="list-group-item">
       <Container>
         <Row>
+          <Col size="xs-3 sm-3">
+            <h5>id:{id} {title}</h5>
+          </Col>
           <Col size="xs-3 sm-2">
-            <h5>{numberOfSteps}</h5>
+            <h5>{noteCount}</h5>
           </Col>
           <Col size="xs-6 sm-7">
-            <h3>{description}</h3>
-          </Col>
-          <Col size="xs-3 sm-3">
-            <h5>{patternName}</h5>
-            <p>
-              pattern:{pattern.map(hit => {
-                return (
-                  hit + " "
-              )})}
-            </p>
+            {trackList.map(item => {
+            return (
+              <div className="APIText" key={item.title}>
+                <p>{JSON.stringify(item)}</p>
+              </div>
+            )})}
           </Col>
         </Row>
       </Container>

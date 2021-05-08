@@ -1,5 +1,5 @@
 import React, { useContext, memo } from 'react'
-import { sequenceList } from '../../constants/config'
+//import { sequenceList } from '../../constants/config'
 import { Context } from '../../hooks/useStore'
 import './styles.css'
 
@@ -11,8 +11,8 @@ const ToolBar = ({
     startTime,
     BPM
 }) => {
-    const { sequence: { id: selectedSequenceID }, selectSequence } = useContext(Context)
-
+    const { sequence, sequenceConfigList, selectSequence } = useContext(Context)
+    console.log("Toolbar SeqConfig List", sequenceConfigList)
     function togglePlayback() {
         if (isSequencePlaying) {
             setPastLapse(l => l + performance.now() - startTime)
@@ -47,14 +47,31 @@ const ToolBar = ({
             </button>
             <input className="form_element input_bpm" id="bpm" type="text" value={BPM} onChange={updateBPM} />
             <label className="label_bpm" htmlFor="bpm">BPM</label>
+            {sequenceConfigList ? (<select
+                            className="form_element select_sequence"
+                            // value={sequence.id}
+                            onChange={e => selectSequence(+e.target.value)}
+                            aria-label="Select sequence"            
+            >
+                {sequenceConfigList.map(seq => {
+                        return (
+                            <option
+                                key={seq.id}
+                                value={seq.id}
+                            >
+                                {seq.title}
+                            </option>
+                        )
+                    })}
+            </select>):""}
             <select
                 className="form_element select_sequence"
-                value={selectedSequenceID}
+                // value={sequence.id}
                 onChange={e => selectSequence(+e.target.value)}
                 aria-label="Select sequence"
             >
                 {
-                    sequenceList.map(seq => {
+                 sequenceConfigList && sequenceConfigList.map(seq => {
                         return (
                             <option
                                 key={seq.id}

@@ -22,6 +22,20 @@ function App() {
   const [patterns, setPatterns] = useState([]);
   const [patternSearch, setPatternSearch] = useState("");
 
+    // Load all patterns and store them with setPatterns
+    useEffect(() => {
+      loadPatterns()
+    }, [])
+  
+    // Loads all patterns and sets them to patterns
+    function loadPatterns() {
+      API.getPatterns()
+        .then(res => 
+          setPatterns(res.data)
+        )
+        .catch(err => console.log(err));
+    };
+
   const handleInputChange = event => {
     // Destructure the name and value properties off of event.target
     // Update the appropriate state
@@ -41,34 +55,34 @@ function App() {
   };
 
   //___________  react-808 functional components start
-  const baseBPMPerOneSecond = 60
-    const stepsPerBar = 8
-    const beatsPerBar = 4
-    const barsPerSequence = 2
-    const totalSteps = stepsPerBar * barsPerSequence
-    const totalBeats = beatsPerBar * barsPerSequence
+    const baseBPMPerOneSecond = 60;
+    const stepsPerBar = 8;
+    const beatsPerBar = 4;
+    const barsPerSequence = 2;
+    const totalSteps = stepsPerBar * barsPerSequence;
+    const totalBeats = beatsPerBar * barsPerSequence;
 
-    const [BPM, setBPM] = useState(120)
-    const [startTime, setStartTime] = useState(null)
-    const [pastLapsedTime, setPastLapse] = useState(0)
-    const [currentStepID, setCurrentStep] = useState(null)
-    const [getNotesAreaWidthInPixels] = useStyles(totalSteps)
+    const [BPM, setBPM] = useState(120);
+    const [startTime, setStartTime] = useState(null);
+    const [pastLapsedTime, setPastLapse] = useState(0);
+    const [currentStepID, setCurrentStep] = useState(null);
+    const [getNotesAreaWidthInPixels] = useStyles(totalSteps);
 
-    const notesAreaWidthInPixels = getNotesAreaWidthInPixels(totalSteps)
-    const timePerSequence = baseBPMPerOneSecond / BPM * 1000 * totalBeats
-    const timePerStep = timePerSequence / totalSteps
-    const isSequencePlaying = startTime !== null
-    const playerTime = useTimer(isSequencePlaying)
-    const lapsedTime = isSequencePlaying ? Math.max(0, playerTime - startTime) : 0
-    const totalLapsedTime = pastLapsedTime + lapsedTime
+    const notesAreaWidthInPixels = getNotesAreaWidthInPixels(totalSteps);
+    const timePerSequence = baseBPMPerOneSecond / BPM * 1000 * totalBeats;
+    const timePerStep = timePerSequence / totalSteps;
+    const isSequencePlaying = startTime !== null;
+    const playerTime = useTimer(isSequencePlaying);
+    const lapsedTime = isSequencePlaying ? Math.max(0, playerTime - startTime) : 0;
+    const totalLapsedTime = pastLapsedTime + lapsedTime;
 
     useEffect(() => {
         if (isSequencePlaying) {
-            setCurrentStep(Math.floor(totalLapsedTime / timePerStep) % totalSteps)
+            setCurrentStep(Math.floor(totalLapsedTime / timePerStep) % totalSteps);
         } else {
-            setCurrentStep(null)
+            setCurrentStep(null);
         }
-    }, [isSequencePlaying, timePerStep, totalLapsedTime, totalSteps])
+    }, [isSequencePlaying, timePerStep, totalLapsedTime, totalSteps]);
 
     const toolBarProps = {
         setStartTime,
@@ -77,17 +91,17 @@ function App() {
         isSequencePlaying,
         startTime,
         BPM
-    }
+    };
 
     const playHeadProps = {
       notesAreaWidthInPixels,
       timePerSequence,
       totalLapsedTime
-  }
+  };
 
     const trackListProps = {
         currentStepID
-    }
+    };
   //___________  react-808 functional components end
 
   return (
@@ -113,7 +127,7 @@ function App() {
                       <Button
                         onClick={handleFormSubmit}
                         type="success"
-                        className="button is-info"
+                        className="button"
                       >
                           Search
                       </Button>
@@ -130,11 +144,11 @@ function App() {
                 {patterns.map(pattern => {
                   return (
                   <PatternListItem 
-                    key={pattern.patternName}
-                    patternName={pattern.patternName}
-                    numberOfSteps={pattern.numberOfSteps}
-                    pattern={pattern.pattern}
-                    description={pattern.description} 
+                    id={pattern.id}
+                    key={pattern._id}
+                    title={pattern.title}
+                    noteCount={pattern.noteCount}
+                    trackList={pattern.trackList}
                   />
                   );
                 })}
@@ -160,6 +174,5 @@ function App() {
       </div>
   );
 }
-
 
 export default App;

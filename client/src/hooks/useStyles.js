@@ -12,7 +12,7 @@ const defaults = {
     '__number_of_steps'    : 16,
     '__number_of_tracks'   : 4,
     '__grid_unit'          : 2,
-    '__play_head_width'    : 3,
+    '__play_head_width'    : 2,
     '__form_element_height': 30,
     '__input_bpm_width'    : 45,
     '__step_height'        : 32,
