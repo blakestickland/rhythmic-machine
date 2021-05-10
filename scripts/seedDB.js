@@ -4,35 +4,92 @@ const db = require("../models");
 // This file empties the Books collection and inserts the books below
 
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/reactpatterns"
+  process.env.MONGODB_URI || "mongodb://localhost/rhythmicMachinePatterns"
 );
 
 const patternSeed = [
   {
-      patternName: "Four-on-the-floor",
-      numberOfSteps: 16,
-      pattern: [1, 5, 9, 13],
-      description: "Standard quarter-note 4/4 beat"
-  },
+    id: 0,
+    title: 'Sequence 1',
+    noteCount: 16,
+    trackList: [
+        {
+            title: 'Kick',
+            soundFile: 'kick',
+            onNotes: [0, 4, 8, 12],
+        },
+        {
+            title: 'Snare',
+            soundFile: 'snare',
+            onNotes: [4, 11, 12],
+        },
+        {
+            title: 'Clap',
+            soundFile: 'clap',
+            onNotes: [2, 6, 10, 14],
+        },
+        {
+            title: 'Closed Hat',
+            soundFile: 'closedHat',
+            onNotes: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        }
+    ]
+},
   {
-      patternName: "Four-Four offbeats",
-      numberOfSteps: 16,
-      pattern: [3, 7, 11, 15],
-      description: "Hits on the offbeats of 4/4"
-  },
+    id: 1,
+    title: 'Bad drum fill',
+    noteCount: 16,
+    trackList: [
+        {
+            title: 'Kick',
+            soundFile: 'kick',
+            onNotes: [12, 13, 14, 15],
+        },
+        {
+            title: 'Snare',
+            soundFile: 'snare',
+            onNotes: [8, 9, 10, 11],
+        },
+        {
+            title: 'Clap',
+            soundFile: 'clap',
+            onNotes: [4, 5, 6, 7],
+        },
+        {
+            title: 'Closed Hat',
+            soundFile: 'closedHat',
+            onNotes: [0, 1, 2, 3],
+        }
+    ]
+},
   {
-      patternName: "4/4 16 semi-quavers",
-      numberOfSteps: 16,
-      pattern: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
-      description: "sixteen semi-quavers"
-  },
-  {
-      patternName: "Hits every second beat",
-      numberOfSteps: 16,
-      pattern: [5, 13],
-      description: "standard snare pattern 4/4"
-  },
-];
+    id: 2,
+    title: 'Stuttery',
+    noteCount: 16,
+    trackList: [
+        {
+            title: 'Kick',
+            soundFile: 'kick',
+            onNotes: [0, 6, 8, 11, 12],
+        },
+        {
+            title: 'Snare',
+            soundFile: 'snare',
+            onNotes: [4, 12, 13],
+        },
+        {
+            title: 'Clap',
+            soundFile: 'clap',
+            onNotes: [14, 15],
+        },
+        {
+            title: 'Closed Hat',
+            soundFile: 'closedHat',
+            onNotes: [1, 2, 3, 5, 6, 8, 9, 10, 12, 13, 14, 15],
+        }
+    ]
+},
+]
 
 db.Pattern.remove({})
   .then(() => db.Pattern.collection.insertMany(patternSeed))

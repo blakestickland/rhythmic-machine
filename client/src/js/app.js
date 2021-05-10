@@ -1,6 +1,6 @@
 // for cross browser compatibility
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioContext = new AudioContext();
+// const AudioContext = window.AudioContext || window.webkitAudioContext;
+// const audioContext = new AudioContext();
 
 window.onload = () => {
     // console.log(audioContext);
@@ -54,55 +54,55 @@ window.onload = () => {
 
     // ___________ START: PLAYING BACK A SOUNDFILE 
 
-    // get the audio element
-    const audioElement = document.querySelector("audio");
+    // // get the audio element
+    // const audioElement = document.querySelector("audio");
 
-    // select our play button
-    const playButton = document.querySelector("button");
+    // // select our play button
+    // const playButton = document.querySelector("button");
 
-    playButton.addEventListener(
-        "click",
-        function () {
-            // check if context is in suspended state (autoplay policy)
-            if (audioContext.state === "suspended") {
-                audioContext.resume();
-            }
+    // playButton.addEventListener(
+    //     "click",
+    //     function () {
+    //         // check if context is in suspended state (autoplay policy)
+    //         if (audioContext.state === "suspended") {
+    //             audioContext.resume();
+    //         }
 
-            // play or pause track depending on state
-            if (this.dataset.playing === "false") {
-                audioElement.play();
-                this.dataset.playing = "true";
-            } else if (this.dataset.playing === "true") {
-                audioElement.pause();
-                this.dataset.playing = "false";
-            }
-        },
-        false
-    );
+    //         // play or pause track depending on state
+    //         if (this.dataset.playing === "false") {
+    //             audioElement.play();
+    //             this.dataset.playing = "true";
+    //         } else if (this.dataset.playing === "true") {
+    //             audioElement.pause();
+    //             this.dataset.playing = "false";
+    //         }
+    //     },
+    //     false
+    // );
 
-    audioElement.addEventListener(
-        "ended",
-        () => {
-            playButton.dataset.playing = "false";
-        },
-        false
-    );
+    // audioElement.addEventListener(
+    //     "ended",
+    //     () => {
+    //         playButton.dataset.playing = "false";
+    //     },
+    //     false
+    // );
 
-    const gainNode = audioContext.createGain();
+    // const gainNode = audioContext.createGain();
 
-    // pass it into the audio context
-    const track = audioContext.createMediaElementSource(audioElement);
-    track.connect(gainNode).connect(audioContext.destination);
+    // // pass it into the audio context
+    // const track = audioContext.createMediaElementSource(audioElement);
+    // track.connect(gainNode).connect(audioContext.destination);
 
-    const volumeControl = document.querySelector("#volume");
+    // const volumeControl = document.querySelector("#volume");
 
-    volumeControl.addEventListener(
-        "input",
-        function () {
-            gainNode.gain.value = this.value;
-        },
-        false
-    );
+    // volumeControl.addEventListener(
+    //     "input",
+    //     function () {
+    //         gainNode.gain.value = this.value;
+    //     },
+    //     false
+    // );
     // ___________ END:   PLAYING BACK A SOUNDFILE 
 
 
