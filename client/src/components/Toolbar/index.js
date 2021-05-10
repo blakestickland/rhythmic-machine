@@ -10,7 +10,9 @@ const ToolBar = ({
     setBPM,
     isSequencePlaying,
     startTime,
-    BPM
+    BPM,
+    handleInputChange,
+    handleFormSubmit
 }) => {
     const { sequence, sequenceConfigList, selectSequence } = useContext(Context)
     function togglePlayback() {
@@ -30,6 +32,12 @@ const ToolBar = ({
     function updateBPM(e) {
         setBPM(e.target.value)
     }
+
+    const SavePatternProps = {
+        handleInputChange,
+        handleFormSubmit
+    };
+
 
     return (
         <nav className="toolbar">
@@ -64,7 +72,7 @@ const ToolBar = ({
                         )
                     })}
             </select>):""}
-            {/* <SavePattern /> */}
+            <SavePattern {...SavePatternProps} />
         </nav>
     )
 }
