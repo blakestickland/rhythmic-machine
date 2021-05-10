@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Nav from "./components/Nav";
 import Input from "./components/Input";
 import Button from "./components/Button";
 import API from "./utils/API";
 import { PatternList, PatternListItem } from "./components/PatternList";
 import { Container, Row, Col } from "./components/Grid";
-import DrumMachine from "./components/DrumMachine";
 import "./js/app";
 import "./App.css"
 
@@ -56,9 +54,9 @@ function App() {
 
   //___________  react-808 functional components start
     const baseBPMPerOneSecond = 60;
-    const stepsPerBar = 8;
+    const stepsPerBar = 16;
     const beatsPerBar = 4;
-    const barsPerSequence = 2;
+    const barsPerSequence = 1;
     const totalSteps = stepsPerBar * barsPerSequence;
     const totalBeats = beatsPerBar * barsPerSequence;
 
