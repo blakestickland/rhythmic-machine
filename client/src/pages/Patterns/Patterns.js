@@ -18,15 +18,15 @@ import useTimer from "../../hooks/useTimer";
 function Patterns() {
     const [patterns, setPatterns] = useState([]);
     const [patternSearch, setPatternSearch] = useState("");
-    const { sequence: { trackList} } = useContext(Context);
+    const { sequence, trackList } = useContext(Context);
     const [formObject, setFormObject] = useState({
       id: 20,
       title: "",
       noteCount: 16,
       trackList: []
     })
-
-    // Load all patterns and store them with setPatterns
+    console.log("sequence patterns", sequence, trackList)
+;    // Load all patterns and store them with setPatterns
     useEffect(() => {
         loadPatterns();
     }, []);
@@ -52,21 +52,23 @@ function Patterns() {
     function handleFormSubmit(event) {
         event.preventDefault();
         setFormObject({ ...formObject, title: event.target.value });
-        if (formObject.title) {
-            API.savePattern({
-                id: incrementedID,
-                title: formObject.title,
-                noteCount: formObject.noteCount,
-                trackList: trackList,
-            })
-                .then(() =>
-                    setFormObject({
-                        title: "",
-                    })
-                )
-                .then(() => loadPatterns())
-                .catch((err) => console.log(err));
-        }
+        console.log("trackList", trackList);
+        console.log("dequence", sequence);
+        // if (formObject.title) {
+        //     API.savePattern({
+        //         id: incrementedID,
+        //         title: formObject.title,
+        //         noteCount: formObject.noteCount,
+        //         trackList: trackList,
+        //     })
+        //         .then(() =>
+        //             setFormObject({
+        //                 title: "",
+        //             })
+        //         )
+        //         .then(() => loadPatterns())
+        //         .catch((err) => console.log(err));
+        // }
     }
 
     //___________  react-808 functional components start

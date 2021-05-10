@@ -61,7 +61,6 @@ const Provider = ({ children }) => {
             selectSequence: selectSequence,
             sequenceConfigList: tempSequenceList,
             trackList: trackList,
-            word: "word",
             setSequence: setSequence,
      }}>
             {children}
