@@ -11,7 +11,6 @@ export function PatternList({ children }) {
 
 // PatternListItem renders a bootstrap list item containing data from the recipe api call
 export function PatternListItem(props) {
-  console.log(`Props are for the pattern: ${props.title}`);
   const {id, title, noteCount, trackList} = props;
 // }
   return (

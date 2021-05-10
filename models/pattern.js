@@ -14,12 +14,12 @@ const patternSchema = new mongoose.Schema({
   noteCount: {
     type: Number,
     default: 16,
-    required: true
+    // required: true
   },
   trackList: {
     type: Array,
     default: [],
-    required: true
+    // required: true
   }
 });
 

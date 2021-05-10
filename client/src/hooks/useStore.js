@@ -11,49 +11,6 @@ const Context = createContext({
     trackList: []
 });
 
-// useEffect()
-
-// const appReducer = (state, action) => {
-//     switch (action.type) {
-//         case "SET_SEQUENCE":
-//             console.log("state is", state);
-//             return state.sequenceConfigList.find((seq) => seq.id === action.value)
-            
-//                 // ...state, 
-//             ;
-//         case "SET_SEQUENCE_CONFIG":
-//             return {
-//                 ...state,
-//                 sequenceConfigList: action.value,
-//             };
-//         case "SET_ON_NOTES":
-//             let newTrackList = state.trackList.map((track, trackID) => {
-//                 if (action.trackID === trackID) {
-//                     return {
-//                         ...track,
-//                         onNotes: action.value,
-//                     };
-//                 } else {
-//                     return track;
-//                 }
-//             });
-//             return {
-//                 ...state,
-//                 trackList: newTrackList,
-//             };
-//         case "SET_STATE":
-//             return {
-//                 sequence: action.newState[0],
-//                 toggleNote: () => {},
-//                 selectSequence: () => {},
-//                 //selectedSequence: {},
-//                 sequenceConfigList: action.newState,            
-//             };
-//         default:
-//             return state;
-//     }
-// };
-
 const Provider = ({ children }) => {
     // const [sequence, dispatch] = useReducer(appReducer, {  });
     // const [sequenceConfigList] = useReducer(appReducer);
@@ -63,30 +20,48 @@ const Provider = ({ children }) => {
     const [ trackList, setTrackList ] = useState();
 
     useEffect(() => {
-        //API call
         // Loads all patterns and sets them to patterns
         API.getPatterns()
             .then((res) => {
-                // setPatterns(res.data)
                 console.log("The API call from useStore returned: ", res.data);
-                // selectSequenceConfig(res.data);
-                setTempSequenceList(res.data);
-                // appReducer({type:  "SET_STATE", newState: res.data})
                 setSequence(res.data[0]);
+                setTempSequenceList(res.data);
             })
             .catch((err) => console.log(err));
-        //call selectSequenceConfig
     }, []);
 
     const toggleNote = ({ trackID, stepID }) => {
-        const onNotes = sequence.trackList[trackID].onNotes
         let newOnNotes;
+        const onNotes = sequence.trackList[trackID].onNotes
+
         if (onNotes.indexOf(stepID) === -1) {
             newOnNotes = [...onNotes, stepID];
         } else {
-            newOnNotes = onNotes.filter((col) => col !== stepID);
+            newOnNotes = onNotes.filter(col => col !== stepID);
         }
-        setTrackList(newOnNotes);
+        //TODO NEW____________________________
+        // console.log(sequence);
+
+        let newTrackList = sequence.trackList.map((track, index) => {
+            if (index === trackID) {
+                const newVar = {...sequence.trackList[trackID], onNotes:newOnNotes};
+
+                // let currentTrackVariable = track.onNotes;
+                // currentTrackVariable.push(newOnNotes);
+                // let newTrack = {...track, onNotes: currentTrackVariable}
+                return newVar;
+            } else {
+                return track;
+            }
+        })
+        // const newVar = {...sequence.trackList[trackID], onNotes:newOnNotes};
+        // console.log("newVar is: ", newVar);
+        console.log("newOnNotes is: ", newOnNotes);
+        console.log("newTrackList", newTrackList);
+        setSequence({...sequence, trackList: newTrackList});
+        //TODO Need to work out how to get newTrackList into sequence
+        // return sequence.trackList = newTrackList;
+        //TODO____________________________ TO HERE  
         // const onNotes = trackListIndex.onNotes;
 
         // setTrackList(trackListIndex);
@@ -96,35 +71,6 @@ const Provider = ({ children }) => {
         const mySequence = tempSequenceList.find((seq) => seq.id === sequenceID);
         setSequence(mySequence);
     }
-
-    // const toggleNote = ({ trackID, stepID }) => {
-    //     let newOnNotes;
-    //     const onNotes = sequence.trackList[trackID].onNotes;
-
-    //     if (onNotes.indexOf(stepID) === -1) {
-    //         newOnNotes = [...onNotes, stepID];
-    //     } else {
-    //         newOnNotes = onNotes.filter((col) => col !== stepID);
-    //     }
-    //     dispatch({
-    //         type: "SET_ON_NOTES",
-    //         value: newOnNotes,
-    //         trackID,
-    //     });
-    // };
-
-    // const selectSequence = (sequenceID) => {
-    //     dispatch({
-    //         type: "SET_SEQUENCE",
-    //         value: sequenceID,
-    //     });
-    // };
-    // const selectSequenceConfig = (sequenceConfig) => {
-    //     dispatch({
-    //         type: "SET_SEQUENCE_CONFIG",
-    //         value: sequenceConfig,
-    //     });
-    // };
 
     return (
         <Context.Provider value={{     

@@ -4,7 +4,7 @@ const patternsController = require("../../controllers/patternsController");
 // Matches with "/api/patterns"
 router.route("/")
   .get(patternsController.findAll)
-  .get(patternsController.find)
+  // .get(patternsController.find)
   .post(patternsController.create);
 
 // Matches with "/api/patterns/:id"
