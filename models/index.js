@@ -1,3 +1,4 @@
 module.exports = {
-  Pattern: require("./pattern")
+  Pattern: require("./pattern"),
+  User: require("./user")
 };

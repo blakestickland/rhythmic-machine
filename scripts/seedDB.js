@@ -101,3 +101,24 @@ db.Pattern.remove({})
     console.error(err);
     process.exit(1);
   });
+
+  const userSeed = [
+    {
+        name: "joe",
+        email: "joe@example.io",
+        username: "joe123",
+        password: "mypass123",
+        password2: "mypass123"
+    }
+  ]
+
+db.User.remove({})
+  .then(() => db.User.collection.insertMany(userSeed))
+  .then(data => {
+    console.log(data.result.n + " records inserted!");
+    process.exit(0);
+  })
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });

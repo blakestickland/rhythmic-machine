@@ -105,10 +105,6 @@ function App() {
 
   return (
       <div>
-        {/* <Nav />
-        <h1 className="title">Rhythmic Machine</h1>
-        <p className="subtitle">Select pre-defined patterns or create your own!</p>  */}
-        {/* <DrumMachine /> */}
           <Row>
             <Col size="md-12">
               <form>
