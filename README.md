@@ -11,11 +11,11 @@ A simple mobile-friendly drum machine that is capable of playing back in-built r
 ---
 | Table of Contents |
 |---|
-| [User Story](#UserStory) |
+| [User-Story](#User-Story) |
 | [Functionality](#Functionality) |
 | [Contribution](#Contribution) |
-| [Front End Tech](#FrontEndTech) |
-| [Back End Tech](#BackEndTech) |
+| [Front-End](#Front-End) |
+| [Back-End](#Back-End) |
 | [Concept](#Concept) |
 | [License](#License) |
 | [Links](#Links) |
@@ -26,7 +26,7 @@ The code is based on other examples of React based drum machines, predominantly 
 A MongoDB-linked dropdown menu was added to recall patterns. Some CSS was enhanced on the original and th
 Use of the use-sound npm package was added to allow for future developments.
 
-## User Story
+## User-Story
 As a musician, I would like to quickly create and hear a rhythmic pattern I have in my head.
 
 As a musician, I would like to have an simple drum machine to keep time during practice.
@@ -42,14 +42,14 @@ As a musician, I would like my mobile phone to provide examples of rhythms that 
 * Model View Controller Design Pattern.
  
 
-## Front End Tech
+## Front-End
 * React
 * Bootstrap
 * HTML
 * CSS
 * JavaScript 
 
-## Back End Tech
+## Back-End
 * Node.js 
 * MongoDB
 * Heroku
