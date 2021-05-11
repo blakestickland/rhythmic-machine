@@ -19,7 +19,6 @@ const Provider = ({ children }) => {
         // Loads all patterns and sets them to patterns
         API.getPatterns()
             .then((res) => {
-                console.log("The API call from useStore returned: ", res.data);
                 setSequence(res.data[0]);
                 setTempSequenceList(res.data);
                 setTrackList(res.data[0].trackList);

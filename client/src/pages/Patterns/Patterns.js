@@ -1,13 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import Input from "../../components/Input";
-import Button from "../../components/Button";
 import API from "../../utils/API";
-import { PatternList, PatternListItem } from "../../components/PatternList";
-import { Container, Row, Col } from "../../components/Grid";
-// import "./js/app";
 import "./Patterns.css";
 
-import PlayHead from "../../components/PlayHead";
 import ToolBar from "../../components/Toolbar";
 import Steps from "../../components/Steps";
 import TrackList from "../../components/TrackList";
@@ -17,15 +11,13 @@ import useTimer from "../../hooks/useTimer";
 
 function Patterns() {
     const [patterns, setPatterns] = useState([]);
-    const [patternSearch, setPatternSearch] = useState("");
-    const { sequence, trackList } = useContext(Context);
+    const { trackList } = useContext(Context);
     const [formObject, setFormObject] = useState({
       id: 20,
       title: "",
       noteCount: 16,
       trackList: []
     })
-    console.log("sequence patterns", sequence, trackList)
 ;    // Load all patterns and store them with setPatterns
     useEffect(() => {
         loadPatterns();
@@ -52,23 +44,21 @@ function Patterns() {
     function handleFormSubmit(event) {
         event.preventDefault();
         setFormObject({ ...formObject, title: event.target.value });
-        console.log("trackList", trackList);
-        console.log("dequence", sequence);
-        // if (formObject.title) {
-        //     API.savePattern({
-        //         id: incrementedID,
-        //         title: formObject.title,
-        //         noteCount: formObject.noteCount,
-        //         trackList: trackList,
-        //     })
-        //         .then(() =>
-        //             setFormObject({
-        //                 title: "",
-        //             })
-        //         )
-        //         .then(() => loadPatterns())
-        //         .catch((err) => console.log(err));
-        // }
+        if (formObject.title) {
+            API.savePattern({
+                id: incrementedID,
+                title: formObject.title,
+                noteCount: formObject.noteCount,
+                trackList: trackList,
+            })
+                .then(() =>
+                    setFormObject({
+                        title: "",
+                    })
+                )
+                .then(() => loadPatterns())
+                .catch((err) => console.log(err));
+        }
     }
 
     //___________  react-808 functional components start
@@ -116,12 +106,6 @@ function Patterns() {
         handleFormSubmit,
     };
 
-    const playHeadProps = {
-        notesAreaWidthInPixels,
-        timePerSequence,
-        totalLapsedTime,
-    };
-
     const trackListProps = {
         currentStepID,
     };
@@ -129,55 +113,6 @@ function Patterns() {
 
     return (
         <div>
-            {/* <Nav />
-        <h1 className="title">Rhythmic Machine</h1>
-        <p className="subtitle">Select pre-defined patterns or create your own!</p>  */}
-            {/* <DrumMachine /> */}
-            <Row>
-                <Col size="md-12">
-                    <form>
-                        <Container>
-                            <Row>
-                                <Col size="xs-9 sm-10">
-                                    <Input
-                                        name="patternSearch"
-                                        value={patternSearch}
-                                        onChange={handleInputChange}
-                                        placeholder="Search For a pattern"
-                                    />
-                                </Col>
-                                <Col size="xs-3 sm-2">
-                                    <Button
-                                        onClick={handleFormSubmit}
-                                        type="success"
-                                        className="button"
-                                    >
-                                        Search
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </Container>
-                    </form>
-                </Col>
-            </Row>
-            <Row>
-                <Col size="xs-12">
-                    <h1>Render patterns Here</h1>
-                    <PatternList>
-                        {patterns.map((pattern) => {
-                            return (
-                                <PatternListItem
-                                    id={pattern.id}
-                                    key={pattern._id}
-                                    title={pattern.title}
-                                    noteCount={pattern.noteCount}
-                                    trackList={pattern.trackList}
-                                />
-                            );
-                        })}
-                    </PatternList>
-                </Col>
-            </Row>
             <Provider>
                 <main className="app">
                     <header className="app_header">
@@ -185,7 +120,6 @@ function Patterns() {
                     </header>
                     <Steps count={totalSteps} />
                     <div className="app_content">
-                        <PlayHead {...playHeadProps} />
                         <TrackList {...trackListProps} />
                     </div>
                     <footer className="app_footer">

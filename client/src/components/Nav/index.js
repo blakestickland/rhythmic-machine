@@ -5,25 +5,11 @@ function Nav() {
     return (
         <nav className="navbar navbar-dark bg-dark">
             <a className="navbar-brand" href="/">
-                Rhythmic Masheeen
+               <h1>RHYTHMIC MACHINE</h1> 
             </a>
-            <audio
-                src="./sounds/AstrudGilberto.mp3"
-                crossOrigin="anonymous"
-            ></audio>
-            <button data-playing="false" role="switch" aria-checked="false">
-                <span>Play/Pause</span>
-            </button>
-            <h4>Volume</h4>
-            <input
-                className="is-danger has-output"
-                type="range"
-                id="volume"
-                min="0"
-                max="2"
-                defaultValue="1"
-                step="0.01"
-            ></input>
+            <a className="navbar-brand" href="/">
+               <h2>percussion sequencer</h2> 
+            </a>
         </nav>
     );
 }
