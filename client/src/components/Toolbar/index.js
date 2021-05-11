@@ -1,7 +1,7 @@
 import React, { useContext, memo } from 'react'
 //import { sequenceList } from '../../constants/config'
 import { Context } from '../../hooks/useStore'
-import SavePattern from "../SavePattern"
+// import SavePattern from "../SavePattern"
 import './styles.css'
 
 const ToolBar = ({
@@ -10,9 +10,11 @@ const ToolBar = ({
     setBPM,
     isSequencePlaying,
     startTime,
-    BPM
+    BPM,
+    handleInputChange,
+    handleFormSubmit
 }) => {
-    const { sequence, sequenceConfigList, selectSequence } = useContext(Context)
+    const { sequenceConfigList, selectSequence } = useContext(Context)
     function togglePlayback() {
         if (isSequencePlaying) {
             setPastLapse(l => l + performance.now() - startTime)
@@ -30,6 +32,12 @@ const ToolBar = ({
     function updateBPM(e) {
         setBPM(e.target.value)
     }
+
+    // const SavePatternProps = {
+    //     handleInputChange,
+    //     handleFormSubmit
+    // };
+
 
     return (
         <nav className="toolbar">
@@ -64,7 +72,7 @@ const ToolBar = ({
                         )
                     })}
             </select>):""}
-            {/* <SavePattern /> */}
+            {/* <SavePattern {...SavePatternProps} /> */}
         </nav>
     )
 }

@@ -6,21 +6,22 @@ const Context = createContext({
     toggleNote: () => {},
     selectSequence: () => {},
     sequenceConfigList: [],
-    trackList: []
+    trackList: [],
+    word: "word",
 });
 
 const Provider = ({ children }) => {
     const [ tempSequenceList, setTempSequenceList ] = useState();
     const [ sequence, setSequence ] = useState();
-    // const [ trackList, setTrackList ] = useState();
+    const [ trackList, setTrackList ] = useState();
 
     useEffect(() => {
         // Loads all patterns and sets them to patterns
         API.getPatterns()
             .then((res) => {
-                console.log("The API call from useStore returned: ", res.data);
                 setSequence(res.data[0]);
                 setTempSequenceList(res.data);
+                setTrackList(res.data[0].trackList);
             })
             .catch((err) => console.log(err));
     }, []);
@@ -43,6 +44,8 @@ const Provider = ({ children }) => {
             }
         })
         setSequence({...sequence, trackList: newTrackList});
+        setTrackList(newTrackList);
+        console.log(sequence);
     }
 
     const selectSequence = sequenceID => {
@@ -56,7 +59,8 @@ const Provider = ({ children }) => {
             toggleNote: toggleNote,
             selectSequence: selectSequence,
             sequenceConfigList: tempSequenceList,
-            // trackList: trackList
+            trackList: trackList,
+            setSequence: setSequence,
      }}>
             {children}
         </Context.Provider>
