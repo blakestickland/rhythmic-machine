@@ -114,7 +114,7 @@ function Patterns() {
     return (
         <div>
             <Provider>
-                <main className="app">
+                <main className="app shadow-lg">
                     <header className="app_header">
                         <ToolBar {...toolBarProps} />
                     </header>
