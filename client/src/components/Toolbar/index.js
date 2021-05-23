@@ -14,7 +14,7 @@ const ToolBar = ({
     handleInputChange,
     handleFormSubmit
 }) => {
-    const { sequenceConfigList, selectSequence } = useContext(Context)
+    const { sequence, selectSequence } = useContext(Context)
     function togglePlayback() {
         if (isSequencePlaying) {
             setPastLapse(l => l + performance.now() - startTime)
@@ -55,13 +55,13 @@ const ToolBar = ({
             </button>
             <input className="form_element input_bpm" id="bpm" type="text" value={BPM} onChange={updateBPM} />
             <label className="label_bpm" htmlFor="bpm">BPM</label>
-            {sequenceConfigList ? (<select
+            {sequence.sequenceConfigList ? (<select
                             className="form_element select_sequence"
-                            // value={sequence.id}
+                            value={sequence.selectedSequence.id}
                             onChange={e => selectSequence(+e.target.value)}
                             aria-label="Select sequence"            
             >
-                {sequenceConfigList.map(seq => {
+                {sequence.sequenceConfigList.map(seq => {
                         return (
                             <option
                                 key={seq.id}

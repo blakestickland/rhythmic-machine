@@ -8,7 +8,7 @@ const TrackList = ({ currentStepID }) => {
 
     return (
         <div className="track-list">
-            {(sequence && sequence.trackList) ? sequence.trackList.map((track, trackID) => { // changed trackList to sequence 21:21
+            {(sequence.selectedSequence && sequence.selectedSequence.trackList) ? sequence.selectedSequence.trackList.map((track, trackID) => { // changed trackList to sequence 21:21
         const { title, onNotes, soundFile } = track
         const soundFilePath = soundFiles[soundFile]
 
