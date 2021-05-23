@@ -44,6 +44,7 @@ function Patterns() {
     function handleFormSubmit(event) {
         event.preventDefault();
         setFormObject({ ...formObject, title: event.target.value });
+        console.log(event.target.value);
         if (formObject.title) {
             API.savePattern({
                 id: incrementedID,
