@@ -10,7 +10,6 @@ import useStyles from "../../hooks/useStyles";
 import useTimer from "../../hooks/useTimer";
 
 function Patterns() {
-    const [patterns, setPatterns] = useState([]);
     const { sequence, loadSequences } = useContext(Context);
     const [formObject, setFormObject] = useState({
       id: 20,
@@ -25,10 +24,8 @@ function Patterns() {
         setFormObject({ ...formObject, [name]: value });
     }
 
-
-
-    // When the form is submitted, use the API.saveBook method to save the book data
-    // Then reload books from the database
+    // When the form is submitted, use the API.savePattern method to save the sequence data
+    // Then reload sequenceConfigList from the database
     function handleFormSubmit(event) {
         event.preventDefault();
         if (formObject.title) {

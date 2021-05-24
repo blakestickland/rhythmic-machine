@@ -1,5 +1,4 @@
 import React, { useContext, memo } from 'react'
-//import { sequenceList } from '../../constants/config'
 import { Context } from '../../hooks/useStore'
 import SavePattern from "../SavePattern"
 import './styles.css'
@@ -14,7 +13,9 @@ const ToolBar = ({
     handleInputChange,
     handleFormSubmit
 }) => {
+    
     const { sequence, selectSequence } = useContext(Context)
+
     function togglePlayback() {
         if (isSequencePlaying) {
             setPastLapse(l => l + performance.now() - startTime)

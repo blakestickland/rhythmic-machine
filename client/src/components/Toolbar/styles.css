@@ -35,9 +35,14 @@
     margin-left: calc(var(--spacer) / 2);
     margin-right: var(--spacer);
   }
+  
+  .label_add_pattern {
+    margin-left: calc(var(--spacer)*4);
+    margin-right: 0;
+  }
 
   .select_sequence {
-    margin-left: var(--spacer);
+    margin-left: calc(var(--spacer)*4);
     text-transform: uppercase;
     border-radius: 0;
     -webkit-appearance: none;
