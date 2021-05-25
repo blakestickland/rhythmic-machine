@@ -5,30 +5,18 @@ import "./Patterns.css";
 import ToolBar from "../../components/Toolbar";
 import Steps from "../../components/Steps";
 import TrackList from "../../components/TrackList";
-import { Provider, Context } from "../../hooks/useStore";
+import { Context } from "../../hooks/useStore";
 import useStyles from "../../hooks/useStyles";
 import useTimer from "../../hooks/useTimer";
 
 function Patterns() {
-    const [patterns, setPatterns] = useState([]);
-    const { trackList } = useContext(Context);
+    const { sequence, loadSequences } = useContext(Context);
     const [formObject, setFormObject] = useState({
       id: 20,
       title: "",
       noteCount: 16,
       trackList: []
-    })
-;    // Load all patterns and store them with setPatterns
-    useEffect(() => {
-        loadPatterns();
-    }, []);
-
-    // Loads all patterns and sets them to patterns
-    const loadPatterns = () => {
-        API.getPatterns()
-            .then((res) => setPatterns(res.data))
-            .catch((err) => console.log(err));
-    };
+    });
 
     // Handles updating component state when the user types into the input field
     function handleInputChange(event) {
@@ -36,27 +24,23 @@ function Patterns() {
         setFormObject({ ...formObject, [name]: value });
     }
 
-      const incrementedID = (patterns.length);
-
-
-    // When the form is submitted, use the API.saveBook method to save the book data
-    // Then reload books from the database
+    // When the form is submitted, use the API.savePattern method to save the sequence data
+    // Then reload sequenceConfigList from the database
     function handleFormSubmit(event) {
         event.preventDefault();
-        setFormObject({ ...formObject, title: event.target.value });
         if (formObject.title) {
             API.savePattern({
-                id: incrementedID,
+                id: sequence?.sequenceConfigList?.length,
                 title: formObject.title,
                 noteCount: formObject.noteCount,
-                trackList: trackList,
+                trackList: sequence.selectedSequence.trackList,
             })
                 .then(() =>
                     setFormObject({
                         title: "",
                     })
                 )
-                .then(() => loadPatterns())
+                .then(() => loadSequences())
                 .catch((err) => console.log(err));
         }
     }
@@ -113,25 +97,23 @@ function Patterns() {
 
     return (
         <div>
-            <Provider>
-                <main className="app shadow-lg">
-                    <header className="app_header">
-                        <ToolBar {...toolBarProps} />
-                    </header>
-                    <Steps count={totalSteps} />
-                    <div className="app_content">
-                        <TrackList {...trackListProps} />
-                    </div>
-                    <footer className="app_footer">
-                        <h1 className="app_title">RHYTHMIC MACHINE</h1>
-                        Code based on{" "}
-                        <a href="https://github.com/joeshub/react-808">
-                            REACT-808 on Github
-                        </a>
-                        , Built by <a href="http://seifi.org/">Joe Seifi</a>
-                    </footer>
-                </main>
-            </Provider>
+            <main className="app shadow-lg">
+                <header className="app_header">
+                    <ToolBar {...toolBarProps} />
+                </header>
+                <Steps count={totalSteps} />
+                <div className="app_content">
+                    <TrackList {...trackListProps} />
+                </div>
+                <footer className="app_footer">
+                    <h1 className="app_title">RHYTHMIC MACHINE</h1>
+                    Code based on{" "}
+                    <a href="https://github.com/joeshub/react-808">
+                        REACT-808 on Github
+                    </a>
+                    , Built by <a href="http://seifi.org/">Joe Seifi</a>
+                </footer>
+            </main>
         </div>
     );
 }

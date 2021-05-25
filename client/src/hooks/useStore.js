@@ -1,66 +1,101 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext, useEffect, useReducer } from "react";
 import API from "../utils/API";
 
-const Context = createContext({
-    sequence: {},
+const initialState = {
+    selectedSequence: {},
     toggleNote: () => {},
     selectSequence: () => {},
     sequenceConfigList: [],
-    trackList: [],
-    word: "word",
+};
+
+const Context = createContext({
+    selectedSequence: {},
+    toggleNote: () => {},
+    selectSequence: () => {},
+    sequenceConfigList: [],
 });
 
+const appReducer = (state, action) => {
+    switch (action.type) {
+        case 'SET_SEQUENCE_LIST':
+            return {
+                ...state, 
+                sequenceConfigList: action.value,
+                selectedSequence: action.value[0]
+            }
+        case 'SET_SEQUENCE':
+            return {
+                ...state, 
+                selectedSequence: state.sequenceConfigList.find(seq => seq.id === parseInt(action.value))
+            }
+        case 'SET_ON_NOTES':
+            let newTrackList = state.selectedSequence.trackList.map((track, trackID) => {
+                if (action.trackID === trackID) {
+                    return {
+                        ...track,
+                        onNotes: action.value
+                    }
+                } else {
+                    return track
+                }
+            })
+            const sequence = {...state.selectedSequence, trackList: newTrackList}
+            return {
+                ...state,
+                selectedSequence: sequence
+            }
+        default:
+            return state
+    }
+}
+
 const Provider = ({ children }) => {
-    const [ tempSequenceList, setTempSequenceList ] = useState();
-    const [ sequence, setSequence ] = useState();
-    const [ trackList, setTrackList ] = useState();
+    const [sequence, dispatch] = useReducer(appReducer, { initialState })
+
+    const loadSequences = () => {
+        API.getPatterns()
+        .then((res) => {
+            dispatch({
+                type: 'SET_SEQUENCE_LIST',
+                value: res.data
+            })
+        })
+        .catch((err) => console.log(err));
+    }
 
     useEffect(() => {
         // Loads all patterns and sets them to patterns
-        API.getPatterns()
-            .then((res) => {
-                setSequence(res.data[0]);
-                setTempSequenceList(res.data);
-                setTrackList(res.data[0].trackList);
-            })
-            .catch((err) => console.log(err));
+        loadSequences();
     }, []);
 
     const toggleNote = ({ trackID, stepID }) => {
         let newOnNotes;
-        const onNotes = sequence.trackList[trackID].onNotes
+        const onNotes = sequence.selectedSequence.trackList[trackID].onNotes
 
         if (onNotes.indexOf(stepID) === -1) {
             newOnNotes = [...onNotes, stepID];
         } else {
             newOnNotes = onNotes.filter(col => col !== stepID);
         }
-        let newTrackList = sequence.trackList.map((track, index) => {
-            if (index === trackID) {
-                const newVar = {...sequence.trackList[trackID], onNotes:newOnNotes};
-                return newVar;
-            } else {
-                return track;
-            }
+        dispatch({
+            type: 'SET_ON_NOTES',
+            value: newOnNotes,
+            trackID
         })
-        setSequence({...sequence, trackList: newTrackList});
-        setTrackList(newTrackList);
-        console.log(sequence);
     }
 
-    const selectSequence = sequenceID => {
-        const mySequence = tempSequenceList.find((seq) => seq.id === sequenceID);
-        setSequence(mySequence);
+    const selectSequence = (sequenceID) => {
+        dispatch({
+            type: 'SET_SEQUENCE',
+            value: sequenceID,
+        })
     }
-
     return (
         <Context.Provider value={{     
-            sequence: sequence,
-            toggleNote: toggleNote,
-            selectSequence: selectSequence,
-            sequenceConfigList: tempSequenceList,
-            trackList: trackList,
-            setSequence: setSequence,
+            sequence,
+            toggleNote,
+            selectSequence,
+            loadSequences
      }}>
             {children}
         </Context.Provider>

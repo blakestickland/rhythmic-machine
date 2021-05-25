@@ -1,7 +1,6 @@
 import React, { useContext, memo } from 'react'
-//import { sequenceList } from '../../constants/config'
 import { Context } from '../../hooks/useStore'
-// import SavePattern from "../SavePattern"
+import SavePattern from "../SavePattern"
 import './styles.css'
 
 const ToolBar = ({
@@ -14,7 +13,9 @@ const ToolBar = ({
     handleInputChange,
     handleFormSubmit
 }) => {
-    const { sequenceConfigList, selectSequence } = useContext(Context)
+    
+    const { sequence, selectSequence } = useContext(Context)
+
     function togglePlayback() {
         if (isSequencePlaying) {
             setPastLapse(l => l + performance.now() - startTime)
@@ -33,10 +34,10 @@ const ToolBar = ({
         setBPM(e.target.value)
     }
 
-    // const SavePatternProps = {
-    //     handleInputChange,
-    //     handleFormSubmit
-    // };
+    const SavePatternProps = {
+        handleInputChange,
+        handleFormSubmit
+    };
 
 
     return (
@@ -55,13 +56,13 @@ const ToolBar = ({
             </button>
             <input className="form_element input_bpm" id="bpm" type="text" value={BPM} onChange={updateBPM} />
             <label className="label_bpm" htmlFor="bpm">BPM</label>
-            {sequenceConfigList ? (<select
+            {sequence.sequenceConfigList ? (<select
                             className="form_element select_sequence"
-                            // value={sequence.id}
+                            value={sequence.selectedSequence.id}
                             onChange={e => selectSequence(+e.target.value)}
                             aria-label="Select sequence"            
             >
-                {sequenceConfigList.map(seq => {
+                {sequence.sequenceConfigList.map(seq => {
                         return (
                             <option
                                 key={seq.id}
@@ -72,7 +73,7 @@ const ToolBar = ({
                         )
                     })}
             </select>):""}
-            {/* <SavePattern {...SavePatternProps} /> */}
+            <SavePattern {...SavePatternProps} />
         </nav>
     )
 }
