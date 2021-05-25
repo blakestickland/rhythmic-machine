@@ -6,14 +6,15 @@ A simple mobile-friendly drum machine that is capable of playing back in-built r
   * Each time a pad is pressed, it makes a sound, making it into a finger tapping drum machine.
   * If the pad is "on", it will play that sound in a sequence when the pattern is played back.
   * Select other patterns from the dropdown menu.
+  * Name and save your own pattern.
   * Mobile-friendly in landscape orientation. 
 
 ---
 | Table of Contents |
 |---|
+| [Contribution](#Contribution) |
 | [User-Story](#User-Story) |
 | [Functionality](#Functionality) |
-| [Contribution](#Contribution) |
 | [Front-End](#Front-End) |
 | [Back-End](#Back-End) |
 | [Concept](#Concept) |
@@ -78,6 +79,6 @@ https://dry-journey-82163.herokuapp.com/
 
 ### Screenshot
 
-Rhtymic Machine Single Page App
+Rhythmic Machine Single Page App
 
-![rhythmic-machine-single-page-app](https://user-images.githubusercontent.com/73763708/117811950-858e2c80-b2a4-11eb-8ab0-31abc3cb31db.png)
+![rhythmic-machine-single-page-app](https://user-images.githubusercontent.com/73763708/119430709-959e1580-bd54-11eb-88c4-5b454f0b69fb.png)
