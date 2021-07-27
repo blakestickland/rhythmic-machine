@@ -1,0 +1,4 @@
+.label_add_pattern {
+    margin-left: var(--spacer);
+    margin-right: calc(var(--spacer) / 2);
+  }
